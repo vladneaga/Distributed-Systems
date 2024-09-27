@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.2.5</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.client</groupId>
+	<artifactId>RESTServer</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>RESTClient</name>
+	<description>SWAGGER CLIENT</description>
+	<properties>
+		<java.version>20</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.6.2</version>
+
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>10.1.20</version>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>io.swagger.codegen.v3</groupId>
+				<artifactId>swagger-codegen-maven-plugin</artifactId>
+				<version>3.0.35</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/static/swagger-mail.yml</inputSpec>
+
+							<generateApis>true</generateApis>
+							<generateModels>true</generateModels>
+							<generateSupportingFiles>false</generateSupportingFiles>
+							<language>spring</language>
+
+							<configOptions>
+
+								<basePackage>com.client.RESTClient</basePackage>
+								<apiPackage>com.client.RESTClient.api</apiPackage>
+								<modelPackage>com.client.RESTClient.model</modelPackage>
+
+								<interfaceOnly>true</interfaceOnly>
+								<sourceFolder>src/main/java</sourceFolder>
+								<hideGenerationTimestamp>true</hideGenerationTimestamp>
+								<dateLibrary>java11</dateLibrary>
+								<ignoreUnknownJacksonAnnotation>true</ignoreUnknownJacksonAnnotation>
+								<notNullJacksonAnnotation>true</notNullJacksonAnnotation>
+								<dateLibrary>false</dateLibrary>
+								<useBeanValidation>true</useBeanValidation>
+								<serializableModel>true</serializableModel>
+
+							</configOptions>
+
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+				<!--<dependencies>
+					<dependency>
+						<groupId>com.my.generator</groupId>
+						<artifactId>customgenerator</artifactId>
+						<version>1.0-SNAPSHOT</version>
+					</dependency>
+				</dependencies>-->
+
+
+	</build>
+
+</project>

@@ -1,0 +1,212 @@
+openapi: 3.0.0
+info:
+  title: Email API
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080/api/v1/
+tags:
+  - name: Folders
+  - name: Messages
+  - name: Attachments
+  - name: Contacts
+paths:
+  /folders:
+    get:
+      summary: Get the list of all the folders
+      tags:
+        - Folders
+      operationId: getAllFolders
+      responses:
+        '200':
+          description: Successful respond with folders list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Folders"
+        'default':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /messages/{folder_id}:
+    get:
+      tags:
+        - Messages
+      summary: Mehod of receiving the list of messages of a folder
+
+      operationId: getMessagesByFolderId
+      parameters:
+        - name: folder_id
+          in: path
+          required: true
+          description: Folder Identificator
+          schema:
+            type: string
+            example: 12345
+      responses:
+        '200':
+          description: Successful respond with messages list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Messages"
+        'default':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /messages:
+    put:
+      summary: Method of creating a message
+      tags:
+        - Contacts
+      operationId: createMessage
+      requestBody:
+        description: Add a message
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Message"
+      responses:
+        '200':
+          description: Successful respond with messages list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        'default':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /attachment:
+    put:
+      tags:
+        - Attachments
+      summary: Mehod of adding an attachment to a message
+
+      operationId: addAttachmentToMessage
+      requestBody:
+        description: Add an attachment to a message
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Attachment"
+      responses:
+        '200':
+          description: Successfully added an attachment to the message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+        'default':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Folder:
+      type: object
+      required:
+        - name
+      properties:
+        folder_id:
+          type: string
+          example: 5
+        name:
+          type: string
+          example: Deleted Messages
+        countOfMessages:
+          type: integer
+        created_at:
+          type: string
+          format: 2022-07-01T15:00:00+0
+    Folders:
+      type: array
+      items:
+        $ref: "#/components/schemas/Folder"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    Message:
+      type: object
+      required:
+        - folder_id
+        - text
+        - creator_id
+        - receiver_id
+      properties:
+        message_id:
+          type: string
+          example: 5
+        text:
+          type: string
+          example: Hey, Mark!
+        sent_at:
+          type: string
+          format: 2022-07-01T15:00:00+0
+        creator_id:
+          type: integer
+        receiver_id:
+          type: integer
+        folder_id:
+          type: integer
+    Messages:
+      type: array
+      items:
+        $ref: "#/components/schemas/Message"
+    Contact:
+      type: object
+      required:
+        - first_name
+        - second_name
+        - birth_date
+      properties:
+        contact_id:
+          type: string
+          example: 5
+        first_name:
+          type: string
+          example: Vladior
+        second_name:
+          type: string
+          example: Neagos
+        birth_date:
+          type: string
+    Contacts:
+      type: array
+      items:
+        $ref: "#/components/schemas/Contact"
+    Attachment:
+      type: object
+      required:
+        - message_id
+        - path
+      properties:
+        attachment_id:
+          type: string
+          example: 5
+        message_id:
+          type: string
+          example: 6
+        path:
+          type: string
+          example: C:\Users\user\Downloads
+    Attachments :
+      type: array
+      items:
+        $ref: "#/components/schemas/Attachment"

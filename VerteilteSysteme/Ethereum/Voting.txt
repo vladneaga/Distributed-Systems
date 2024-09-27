@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Voting {
+    uint public average;
+    uint public totalVotes;
+    uint public totalPoints;
+    mapping(address => bool) public hasVoted;
+
+    function vote(uint points) public {
+        require(points >= 0 && points <= 100, "Points must be between 0 and 100");
+        require(!hasVoted[msg.sender], "You have already voted");
+
+        hasVoted[msg.sender] = true;
+        totalVotes += 1;
+        totalPoints += points;
+
+        average = totalPoints / totalVotes;
+    }
+}

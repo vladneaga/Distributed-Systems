@@ -1,0 +1,31 @@
+services:
+  # MQTT server
+  mosquitto:
+    image: eclipse-mosquitto:2
+    volumes:
+      - "./mosquitto:/mosquitto"
+
+  # Node.js client
+  client:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "./client:/usr/src/node/app"
+
+  # Configurator
+  configurator:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "./configurator:/usr/src/node/app"
+    command: node configurator.js
+
+  # Sensor
+  sensor:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "./sensor:/usr/src/node/app"
